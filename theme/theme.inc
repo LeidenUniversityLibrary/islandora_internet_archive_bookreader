@@ -23,14 +23,16 @@ function template_preprocess_islandora_internet_archive_bookreader(array &$varia
   if ($page_source == 'djatoka') {
     $backup_uris = variable_get('islandora_internet_archive_bookreader_use_backup_dsid', FALSE);
     $pages = array();
+    global $base_url;
     foreach ($variables['pages'] as $page_pid => $info) {
       $addendum = $backup_uris ? array('pid' => $page_pid) : array(
-        'uri' => url("islandora/object/{$page_pid}/datastream/{$dsid}/view", array(
-          'absolute' => TRUE,
-          'query' => array(
-            'token' => islandora_get_object_token($page_pid, $dsid, 2),
-          ),
-        )),
+        'uri' => $base_url . "/islandora/object/{$page_pid}/datastream/{$dsid}/view?token=" . islandora_get_object_token($page_pid, $dsid, 2)
+//      'uri' => url("islandora/object/{$page_pid}/datastream/{$dsid}/view", array(
+//        'absolute' => TRUE,
+//        'query' => array(
+//          'token' => islandora_get_object_token($page_pid, $dsid, 2),
+//        ),
+//      )),
       );
       $pages[] = $info + $addendum;
     }
