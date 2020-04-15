@@ -94,6 +94,7 @@ function template_preprocess_islandora_internet_archive_bookreader(array &$varia
       'mobilize' => variable_get('islandora_internet_archive_bookreader_mobile_full_screen', FALSE),
       'content_type' => variable_get('islandora_internet_archive_bookreader_content_type', 'book'),
       'hasCover' => $hascover,
+      'defaults' => "mode/$view_mode",
     ) + $page_source_settings,
   );
 
@@ -102,6 +103,7 @@ function template_preprocess_islandora_internet_archive_bookreader(array &$varia
     'group' => CSS_SYSTEM,
   ));
   drupal_add_css("$module_path/css/islandora_internet_archive_bookreader.css");
+  drupal_add_css("$module_path/css/jquery.mmenu.css");
   // Included jQuery 1.4.2 and jQueryUI 1.8.5 are not being used in favor of
   // the Drupal system versions.
   drupal_add_library('system', 'effects');
@@ -121,20 +123,14 @@ function template_preprocess_islandora_internet_archive_bookreader(array &$varia
       'weight' => -6,
     )
   );
-  // Add the required jQuery version, specifying weight.
-  drupal_add_js("$module_path/js/jquery_1_5.min.js", array(
+  drupal_add_js("$library_path/BookReader/mmenu/dist/js/jquery.mmenu.all.min.js", array(
     'group' => JS_LIBRARY,
     'weight' => -6,
   ));
-  // We also need to be sure to use the correct jquery ui version.
-  drupal_add_js("$module_path/js/jquery.ui-1.8.10/jquery-ui.min.js", array(
-    'group' => JS_LIBRARY,
-    'weight' => -6,
-  ));
-  drupal_add_js("$library_path/BookReader/dragscrollable.js", array(
-    'group' => JS_LIBRARY,
-    'weight' => -6,
-  ));
+  drupal_add_js("$library_path/BookReader/dragscrollable-br.js", array(
+      'group' => JS_LIBRARY,
+      'weight' => -6,
+    ));
   // Use a newer version of color box as the version bundled with BookReader.
   // Won't work with JQuery 1.4.4.
   drupal_add_js("$colorbox_path/jquery.colorbox-min.js", array(
